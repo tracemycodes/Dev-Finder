@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Navbar from './components/layouts/Navbar';
 import Users from './components/users/Users';
 import axios from 'axios';
@@ -46,6 +47,7 @@ class App extends Component {
     const {users, loading, alert} = this.state
 
     return (
+      <Router>
       <div className='App'>
         <Navbar title='Dev Finder' icon='fab fa-github' />
         <div className='container'>
@@ -54,6 +56,7 @@ class App extends Component {
           <Users loading={loading} users={users} />
         </div>
       </div>
+      </Router>
     );
   }
 }
