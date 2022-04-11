@@ -1,6 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-const RepoItem = ({repo}) => {
+
+const RepoItem = ({ repo }) => {
   return (
     <div className='card'>
       <h3>
@@ -11,7 +13,7 @@ const RepoItem = ({repo}) => {
 }
 
 RepoItem.protoTypes = {
-  // repo: PropTypes.object.isRequired
+  repo: PropTypes.object.isRequired
 }
 
 export default RepoItem
