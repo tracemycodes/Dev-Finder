@@ -10,8 +10,6 @@ import About from './components/pages/About';
 import User from './components/users/User';
 import GithubState from './context/github/GithubState';
 
-
-
 const App = () => {
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({});
@@ -19,23 +17,11 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
 
-  
-  const searchUsers = async (text) => {
-    setLoading(true);
-    const res = await axios.get(
-      `https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECERT}`
-    );
-
-    setUsers(res.data.items);
-    setLoading(false);
-  };
-
   const getSingleUser = async (username) => {
     setLoading(true);
     const res = await axios.get(
       `https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECERT}`
     );
-
 
     setUser(res.data);
   };
@@ -61,10 +47,9 @@ const App = () => {
     }, 4000);
   };
 
-
-    return (
-      // <GithubState>
-      <GithubState>
+  return (
+    // <GithubState>
+    <GithubState>
       <Router>
         <div className='App'>
           <Navbar title='Dev Finder' icon='fab fa-github' />
@@ -77,7 +62,6 @@ const App = () => {
                 render={(props) => (
                   <Fragment>
                     <Search
-                      searchUsers={searchUsers}
                       clearUsers={clearUsers}
                       showClear={users.length > 0 ? true : false}
                       setAlert={setMyAlert}
@@ -104,9 +88,9 @@ const App = () => {
             </Switch>
           </div>
         </div>
-      </Router> 
-      </GithubState>
-    );
-}
+      </Router>
+    </GithubState>
+  );
+};
 
 export default App;
