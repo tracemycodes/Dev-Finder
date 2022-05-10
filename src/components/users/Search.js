@@ -1,10 +1,13 @@
 import React, { useContext, useState } from 'react';
 import GithubContext from '../../context/github/githubContext';
+import AlertContext from '../../context/alert.js/alertContext';
 
-const Search = ({ setAlert }) => {
-  const githubContext = useContext(GithubContext)
+const Search = () => {
+  const githubContext = useContext(GithubContext);
+  const alertContext = useContext(AlertContext);
 
   const { clearUsers, searchUsers, users } = githubContext;
+  const { setAlert } = alertContext;
   const [text, setText] = useState('');
 
   const onChange = (e) => {
@@ -45,6 +48,5 @@ const Search = ({ setAlert }) => {
     </div>
   );
 };
-
 
 export default Search;

@@ -1,55 +1,49 @@
-import React, {Fragment, useContext, useEffect } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Spinner from '../layouts/Spinner';
 import Repos from '../repos/Repos';
-import PropTypes from 'prop-types';
 import GithubContext from '../../context/github/githubContext';
 
-const User = ({ match  }) => {
-  const githubContext = useContext(GithubContext)
+const User = ({ match }) => {
+  const githubContext = useContext(GithubContext);
 
   const { getSingleUser, user, loading, getUserRepos, repos } = githubContext;
 
-
   useEffect(() => {
-   getSingleUser(match.params.login);
-   getUserRepos(match.params.login);
-  // eslint-disable-next-line
+    getSingleUser(match.params.login);
+    getUserRepos(match.params.login);
+    // eslint-disable-next-line
   }, []);
 
-  
+  const {
+    name,
+    avatar_url,
+    company,
+    location,
+    bio,
+    blog,
+    login,
+    html_url,
+    followers,
+    following,
+    public_repos,
+    public_gists,
+    hireable,
+  } = user;
 
-    const {
-      name,
-      avatar_url,
-      company,
-      location,
-      bio,
-      blog,
-      login,
-      html_url,
-      followers,
-      following,
-      public_repos,
-      public_gists,
-      hireable,
-    } = user;
+  if (loading) return <Spinner />;
 
-
-    if (loading) return <Spinner />;
-
-    return (
-      <Fragment>
-        <Link to='/' className='btn btn-light'>
-          Back To Home
-        </Link>
-        Hireable:{' '}
-        {hireable ? (
-          <i className='fas fa-check text-success' />
-        ) : (
-          <i className='fas fa-times-circle text-success' />
-        )}
-      
+  return (
+    <Fragment>
+      <Link to='/' className='btn btn-light'>
+        Back To Home
+      </Link>
+      Hireable:{' '}
+      {hireable ? (
+        <i className='fas fa-check text-success' />
+      ) : (
+        <i className='fas fa-times-circle text-success' />
+      )}
       <div className='card grid-2'>
         <div className='all-center'>
           <img
@@ -62,37 +56,37 @@ const User = ({ match  }) => {
           <p>Location: {location}</p>
         </div>
         <div>
-          {bio &&
+          {bio && (
             <Fragment>
               <h3>Bio</h3>
               <p>{bio}</p>
             </Fragment>
-          }
+          )}
           <a href={html_url} className='btn btn-dark my-1'>
             Visit GitHub Profile
           </a>
           <ul>
             <li>
-              {login &&
+              {login && (
                 <Fragment>
                   <strong>Username: </strong> {login}
                 </Fragment>
-              }
+              )}
             </li>
 
             <li>
-              {company &&
+              {company && (
                 <Fragment>
                   <strong>Company: </strong> {company}
                 </Fragment>
-              }
+              )}
             </li>
             <li>
-              {blog &&
+              {blog && (
                 <Fragment>
                   <strong>Website: </strong> {blog}
                 </Fragment>
-              }
+              )}
             </li>
           </ul>
         </div>
@@ -104,11 +98,8 @@ const User = ({ match  }) => {
         <div className='badge badge-dark'>Public Gists: {public_gists}</div>
       </div>
       <Repos repos={repos} />
-
-      </Fragment>
-    );
-
-}
-
+    </Fragment>
+  );
+};
 
 export default User;
