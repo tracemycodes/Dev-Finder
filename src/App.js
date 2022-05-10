@@ -12,19 +12,17 @@ import GithubState from './context/github/GithubState';
 
 const App = () => {
   const [users, setUsers] = useState([]);
-  const [user, setUser] = useState({});
   const [repos, setRepos] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
 
-  const getSingleUser = async (username) => {
-    setLoading(true);
-    const res = await axios.get(
-      `https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECERT}`
-    );
+  // const getSingleUser = async (username) => {
+  //   setLoading(true);
+  //   const res = await axios.get(
+  //     `https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECERT}`
+  //   );
 
-    setUser(res.data);
-  };
+  //   setUser(res.data);
+  // };
 
   const getUserRepos = async (username) => {
     setLoading(true);
@@ -66,7 +64,7 @@ const App = () => {
                       showClear={users.length > 0 ? true : false}
                       setAlert={setMyAlert}
                     />
-                    <Users loading={loading} users={users} />
+                    <Users />
                   </Fragment>
                 )}
               />
@@ -77,10 +75,7 @@ const App = () => {
                 render={(props) => (
                   <User
                     {...props}
-                    getSingleUser={getSingleUser}
                     getUserRepos={getUserRepos}
-                    user={user}
-                    loading={loading}
                     repos={repos}
                   />
                 )}
