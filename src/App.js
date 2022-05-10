@@ -11,15 +11,13 @@ import User from './components/users/User';
 import GithubState from './context/github/GithubState';
 
 const App = () => {
-  const [users, setUsers] = useState([]);
-  const [repos, setRepos] = useState([]);
   const [alert, setAlert] = useState(null);
 
 
 
-  const clearUsers = () => {
-    setUsers([]);
-  };
+  // const clearUsers = () => {
+  //   setUsers([]);
+  // };
 
   const setMyAlert = (msg, type) => {
     setAlert({ msg, type });
@@ -44,8 +42,6 @@ const App = () => {
                 render={(props) => (
                   <Fragment>
                     <Search
-                      clearUsers={clearUsers}
-                      showClear={users.length > 0 ? true : false}
                       setAlert={setMyAlert}
                     />
                     <Users />
@@ -59,8 +55,6 @@ const App = () => {
                 render={(props) => (
                   <User
                     {...props}
-                    getUserRepos={getUserRepos}
-                    repos={repos}
                   />
                 )}
               />

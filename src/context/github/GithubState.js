@@ -12,13 +12,13 @@ import {
   REMOVE_ALERT,
 } from '../types';
 
-const GithubState = props => {
+const GithubState = (props) => {
   const initialState = {
     users: [],
     user: {},
     repos: [],
-    loading: false
-  }
+    loading: false,
+  };
 
   const [state, dispatch] = useReducer(GithubReducer, initialState);
 
@@ -29,12 +29,11 @@ const GithubState = props => {
       `https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECERT}`
     );
 
-    dispatch({ 
-      type: SEARCH_USERS, 
-      payload: res.data 
-    })
+    dispatch({
+      type: SEARCH_USERS,
+      payload: res.data.items,
+    });
   };
-
 
   // GET_USER,
   const getSingleUser = async (username) => {
@@ -43,15 +42,17 @@ const GithubState = props => {
       `https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECERT}`
     );
 
-    dispatch({ 
-      type: GET_USER, 
-      payload: res.data 
-    })
+    dispatch({
+      type: GET_USER,
+      payload: res.data,
+    });
   };
 
-
   // CLEAR_USERS,
-  
+  const clearUsers = () =>
+    dispatch({
+      type: CLEAR_USERS,
+    });
 
   // GET_REPOS,
   const getUserRepos = async (username) => {
@@ -60,17 +61,17 @@ const GithubState = props => {
       `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECERT}`
     );
 
-    dispatch({ 
-      type: GET_REPOS, 
-      payload: res.data 
-    })
+    dispatch({
+      type: GET_REPOS,
+      payload: res.data,
+    });
   };
-
 
   // SET_LOADING,
   const setLoading = () => dispatch({ type: SET_LOADING });
 
-    return <GithubContext.Provider
+  return (
+    <GithubContext.Provider
       value={{
         users: state.users,
         user: state.user,
@@ -78,12 +79,13 @@ const GithubState = props => {
         loading: state.loading,
         searchUsers,
         getSingleUser,
-        getUserRepos
+        getUserRepos,
+        clearUsers
       }}
     >
-
       {props.children}
     </GithubContext.Provider>
+  );
 };
 
 export default GithubState;
